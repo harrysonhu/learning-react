@@ -5,8 +5,6 @@ import { connect } from "react-redux";
 import { login } from "../../actions/auth";
 
 class LoginPage extends Component {
-  state = {};
-
   submit = data => {
     return this.props.login(data).then(() => this.props.history.push("/"));
   };
