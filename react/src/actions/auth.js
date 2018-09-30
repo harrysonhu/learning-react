@@ -20,3 +20,9 @@ export const logout = () => dispatch => {
   localStorage.removeItem("learningReactJWT");
   dispatch(userLoggedOut());
 };
+
+export const confirm = token => dispatch =>
+  api.user.confirm(token).then(user => {
+    localStorage.learningReactJWT = user.token;
+    dispatch(userLoggedIn(user));
+  });
