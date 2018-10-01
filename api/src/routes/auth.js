@@ -1,6 +1,6 @@
 import express from "express";
 import User from "../models/User";
-import { sendResetPasswordEmail } from "../mailer";
+import { sendResetPasswordEmail, sendConfirmationEmail } from "../mailer";
 import jwt from "jsonwebtoken";
 
 const router = express.Router();
@@ -65,6 +65,20 @@ router.post("/reset_password", (req, res) => {
           res.status(404).json({ errors: { global: "Invalid Token" } });
         }
       });
+    }
+  });
+});
+
+router.post("/resendConfirmation", (req, res) => {
+  const { email } = req.body.email;
+  User.findOne(email).then(user => {
+    if (user) {
+      sendConfirmationEmail(user);
+      res.json({});
+    } else {
+      res
+        .status(400)
+        .json({ errors: { global: "There is no user with such email" } });
     }
   });
 });

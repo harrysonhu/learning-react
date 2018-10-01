@@ -49,6 +49,7 @@ class ConfirmationPage extends React.Component {
               <Icon name="warning sign" />
               <Message.Content>
                 <Message.Header>Oops. Invalid token it seems.</Message.Header>
+                <Link to="/resendConfirmation">Resend confirmation email</Link>
               </Message.Content>
             </Message>
           )}
