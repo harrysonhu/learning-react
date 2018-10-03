@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import ConfirmEmailMessage from "../messages/ConfirmEmailMessage";
-import books from "../../reducers/books";
+//import books from "../../reducers/books";
 import { allBooksSelector } from "../../reducers/books";
 import AddBookCtA from "../ctas/AddBookCtA";
 
