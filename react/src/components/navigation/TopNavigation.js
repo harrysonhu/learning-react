@@ -8,18 +8,22 @@ import { logout } from "../../actions/auth";
 
 const TopNavigation = ({ user, logout }) => {
   return (
-    <Menu secondary pointing>
-      <Menu.Item as={Link} to="/dashboard">
-        Dashboard
-      </Menu.Item>
-      <Menu.Menu position="right">
-        <Dropdown trigger={<Image avatar src={gravatarUrl(user.email)} />}>
-          <Dropdown.Menu>
-            <Dropdown.Item onClick={() => logout()}>Logout</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-      </Menu.Menu>
-    </Menu>
+    <div>
+      {user.confirmed && (
+        <Menu secondary pointing>
+          <Menu.Item as={Link} to="/dashboard">
+            Dashboard
+          </Menu.Item>
+          <Menu.Menu position="right">
+            <Dropdown trigger={<Image avatar src={gravatarUrl(user.email)} />}>
+              <Dropdown.Menu>
+                <Dropdown.Item onClick={() => logout()}>Logout</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </Menu.Menu>
+        </Menu>
+      )}
+    </div>
   );
 };
 

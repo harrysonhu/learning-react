@@ -9,7 +9,7 @@ import AddBookCtA from "../ctas/AddBookCtA";
 const DashboardPage = ({ isConfirmed, books }) => (
   <div>
     {!isConfirmed && <ConfirmEmailMessage />}
-    {books.length === 0 && <AddBookCtA />}
+    {isConfirmed && books.length === 0 && <AddBookCtA />}
   </div>
 );
 
