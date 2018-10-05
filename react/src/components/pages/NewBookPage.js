@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import SearchBookForm from "../forms/SearchBookForm";
 import BookForm from "../forms/BookForm";
+import axios from "axios";
 import { Segment } from "semantic-ui-react";
 
 class NewBookPage extends Component {
@@ -10,6 +11,10 @@ class NewBookPage extends Component {
 
   onBookSelect = book => {
     this.setState({ book });
+    axios
+      .get(`/api/books/fetchPages?goodreadsId=${book.goodreadsId}`)
+      .then(res => res.data.pages)
+      .then(pages => this.setState({ book: { ...book, pages } }));
   };
 
   addBook = () => console.log("placeholder for now");

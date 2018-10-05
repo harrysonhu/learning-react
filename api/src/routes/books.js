@@ -9,9 +9,9 @@ router.use(authenticate);
 router.get("/search", (req, res) => {
   request
     .get(
-      `https://www.goodreads.com/search/index.xml?key=ujEKbFekz1KKrYUq6nng&q=${
-        req.query.q
-      }`
+      `https://www.goodreads.com/search/index.xml?key=${
+        process.env.GOODREADS_KEY
+      }&q=${req.query.q}`
     )
     .then(result =>
       parseString(result, (err, goodreadsResult) =>
@@ -26,6 +26,26 @@ router.get("/search", (req, res) => {
           )
         })
       )
+    );
+});
+
+router.get("/fetchPages", (req, res) => {
+  const goodreadsId = req.query.goodreadsId;
+
+  request
+    .get(
+      `https://www.goodreads.com/book/show.xml?key=${
+        process.env.GOODREADS_KEY
+      }&id=${goodreadsId}`
+    )
+    .then(result =>
+      parseString(result, (err, goodreadsResult) => {
+        const numPages = goodreadsResult.GoodreadsResponse.book[0].num_pages[0];
+        const pages = numPages ? parseInt(numPages, 10) : 0;
+        res.json({
+          pages
+        });
+      })
     );
 });
 
