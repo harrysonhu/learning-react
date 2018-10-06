@@ -8,20 +8,33 @@ import AddBookCtA from "../ctas/AddBookCtA";
 import { fetchBooks } from "../../actions/books";
 
 class DashboardPage extends Component {
-  componentDidMount = () => this.onInit(this.props);
+  state = {
+    loading: true
+  };
+  componentDidMount = () =>
+    this.onInit(this.props).then(() => this.setState({ loading: false }));
 
   onInit = props => props.fetchBooks();
 
-  render() {
+  renderContent = () => {
     const { isConfirmed, books } = this.props;
+    if (this.state.loading) {
+      return <h1>Loading...</h1>;
+    } else {
+      if (isConfirmed && books.length === 0) {
+        return <AddBookCtA />;
+      } else {
+        return <p>You have books!</p>;
+      }
+    }
+  };
+
+  render() {
+    const { isConfirmed } = this.props;
     return (
       <div>
         {!isConfirmed && <ConfirmEmailMessage />}
-        {isConfirmed && books.length === 0 ? (
-          <AddBookCtA />
-        ) : (
-          <p>You have books!</p>
-        )}
+        {this.renderContent()}
       </div>
     );
   }
@@ -48,3 +61,10 @@ export default connect(
   mapStateToProps,
   { fetchBooks }
 )(DashboardPage);
+
+/* {loading ? <h1>Loading...</h1> : 
+        {isConfirmed && books.length === 0 ? (
+          <AddBookCtA />
+        ) : (
+          <p>You have books!</p>
+        )} */
