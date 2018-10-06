@@ -8,6 +8,10 @@ import parseErrors from "../utils/parseErrors";
 const router = express.Router();
 router.use(authenticate);
 
+router.get("/", (req, res) => {
+  Book.find({ userId: req.currentUser._id }).then(books => res.json({ books }));
+});
+
 router.post("/", (req, res) => {
   const { title, authors, cover, goodreadsId, pages } = req.body.book;
   Book.create({
